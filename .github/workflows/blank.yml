@@ -19,8 +19,6 @@ jobs:
           test-plan-path: ./Testcase/ThreadGroup.jmx
           args: "-e -o ./reports/html/"
 
-      - name: Download reports
-        uses: actions/download-artifact@v2
-        with:
-          name: reports
-          path: reports/  
+      - name: check pwd
+        run: |
+          ls
