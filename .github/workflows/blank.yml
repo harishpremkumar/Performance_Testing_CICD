@@ -19,9 +19,8 @@ jobs:
           test-plan-path: ./Testcase/ThreadGroup.jmx
           args: "-e -o ./reports/html/"
 
-      - name: Upload Results
-        uses: actions/upload-artifact@v3
+      - name: Download reports
+        uses: actions/download-artifact@v2
         with:
-          name: jmeter-html-reports
-          path: reports
-          if-no-files-found: error    
+          name: reports
+          path: reports/  
