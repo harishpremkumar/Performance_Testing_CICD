@@ -13,20 +13,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+      - name: JMeter Test
+        uses: QAInsights/PerfAction@v5.6.2
         with:
-          distribution: 'adopt'
-          java-version: '11'  # adjust Java version as per your JMeter requirements
+          test-plan-path: ./Testcase/ThreadGroup.jmx
+          args: "-e -o ./reports/html/"
 
-      - name: Run JMeter Performance Test
-        run: |
-          wget -q https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.1.tgz
-          tar -xzf apache-jmeter-5.4.1.tgz
-          ./apache-jmeter-5.4.1/bin/jmeter -n -t Testcase/ThreadGroup.jmx -l Report/new.jtl -e -o Report/skip.html
-
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v2
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
         with:
           name: jmeter-results
-          path: ./Report  # adjust path if your results file is saved elsewhere
+          path: result.jtl
+          if-no-files-found: error
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: jmeter-html-reports
+          path: reports
+          if-no-files-found: error    
